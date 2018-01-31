@@ -27,8 +27,8 @@ markdown:           kramdown
 nav:
   - name:           "About"
     href:           "//changochen.github.io/about"
-  - name:           "Download"
-    href:           "//github.com/Changochen/Kiko/releases"
+  - name:           "Github"
+    href:           "//github.com/Changochen"
 
 # Sass
 sass:
