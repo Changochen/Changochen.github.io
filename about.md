@@ -2,7 +2,13 @@
 title: About
 permalink: /about/
 ---
+A pwner from
 
-[comment]: <><p class="lead"><a href="http://github.com/gfjaru/Kiko">Kiko</a> is a theme for <a href="http://jekyllrb.com">Jekyll</a>, the static site generator.</p>
+- Blue-lotus
+- Eur3kA
+- Trinity
 
-Kiko is simple, lightweight theme. It's designed and developed by [@gfjaru](https://twitter.com/gfjaru).
+This blog is for sharing my knowledge and communicating with the world.
+
+Email:changochen1@gmail.com
+Github:[Changochen](https://github.com/Changochen)
