@@ -29,15 +29,15 @@ don' t exist in the remote binary.
 
 So how do we get the flag?
 
-1. bypass the path check
-   1. open 16 `./data/../lyrics` and read them until the `DrgnS` in the binary is read. Then the `record` pop them out with the files unclosed.
-   2. open 12 arbitrary file , like `./data/The Beatles/Girl` 
-   3. Now the `fd` number is `31`, because we still have `stdin`,`stdout` and `stderr`!
-   4. open `./data/../flag`
-2. bypass `DrgnS` check
-   1. read the `./data/The Beatles/Girl` so many times that no contents are left
-   2. read `flag`
-   3. read `./data/The Beatles/Girl` again, as the stack is uninitialized , we get the flag!
+1. bypass the path check:
+2. open 16 `./data/../lyrics` and read them until the `DrgnS` in the binary is read. Then the `record` pop them out with the files unclosed.
+3. open 12 arbitrary file , like `./data/The Beatles/Girl` 
+4. Now the `fd` number is `31`, because we still have `stdin`,`stdout` and `stderr`!
+5. open `./data/../flag`
+6. bypass `DrgnS` check:
+7. read the `./data/The Beatles/Girl` so many times that no contents are left
+8. read `flag`
+9. read `./data/The Beatles/Girl` again, as the stack is uninitialized , we get the flag!
 
 
 
