@@ -25,7 +25,9 @@ Which means...
 282 : assert(bytes_read == length);
 ```
 
-don' t exist in the remote binary.
+don' t exist in the remote binary. 
+
+How to find this out?  In `write` function, if your input's length doesn't equal the `length` , it won't abort..
 
 So how do we get the flag?
 
