@@ -1,6 +1,5 @@
 ---
-title: About
-permalink: /about/
+layout: default
 ---
 A pwner from
 
