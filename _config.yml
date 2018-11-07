@@ -1,54 +1,5 @@
-# # # # # # # #
-#   K i k o   #
-# # # # # # # #
-
-# Basic
-name:               "Ne0"
-description:        "A blog to share my knowledge with the world"
+title: Hacker theme
+description: Hacker is a theme for GitHub Pages.
+show_downloads: true
+google_analytics:
 theme: jekyll-theme-hacker
-
-# jekyll-seo-tag, see: http://www.rubydoc.info/gems/jekyll-seo-tag/1.2.0
-url:                "//changochen.github.io"
-author:             "Ne0"
-#twitter:
-#  username:         "gfjaru"
-#facebook:
-#  app_id:           1234
-#    publisher:      1234
-
-# URL
-baseurl:            ""
-#baseurl:            "" #For Root Domain
-permalink:          /:year/:month/:day/:title/
-
-# Markdown
-markdown:           kramdown
-
-# Navigation
-nav:
-  - name:           "About"
-    href:           "//changochen.github.io/about"
-  - name:           "Github"
-    href:           "//github.com/Changochen"
-
-# Sass
-sass:
-  style:            :compressed
-
-# Scopes
-defaults:
-  -
-    scope:
-      path:         ""
-      type:         "pages"
-    values:
-      layout:       "page"
-  -
-    scope:
-      path:         ""
-      type:         "posts"
-    values:
-      layout:       "post"
-
-gems:
-  - jekyll-seo-tag
