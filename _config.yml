@@ -5,6 +5,7 @@ google_analytics:
 theme: jekyll-theme-hacker
 author: Ne0
 
+home: /index.html
 github:
     homepage: https://github.com/Changochen
 

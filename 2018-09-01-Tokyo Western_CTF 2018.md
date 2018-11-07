@@ -1,10 +1,7 @@
 ---
-title:        "TokyoWestern CTF 2018 BBQ"
-
-# jekyll-seo-tag
-
-author:       "Ne0"
-
+layout: post
+title: "TokyoWestern CTF 2018 BBQ"
+date: "2018.09.01"
 ---
 
 

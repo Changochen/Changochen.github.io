@@ -1,10 +1,7 @@
 ---
-title:        "Teaser Dragon CTF 2018"
-
-# jekyll-seo-tag
-
-author:       "Ne0"
-
+layout: post
+title: "Teaser Dragon CTF 2018"
+date: "2018.09.29"
 ---
 
 
