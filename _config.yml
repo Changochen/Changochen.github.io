@@ -7,4 +7,4 @@ theme: jekyll-theme-hacker
 github:
     homepage: https://github.com/Changochen
 
-about: ./about.md
+about: /about.md
