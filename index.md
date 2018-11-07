@@ -3,7 +3,7 @@ layout: default
 ---
 
 [Link to another page](./another-page.html).
-[Link to another page](./about.html).
+[A post](./_post/2018-02-04-codegate.md).
 
 There should be whitespace between paragraphs.
 
