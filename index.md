@@ -5,6 +5,9 @@ layout: default
 
 # 2018
 
+## HCTF 2018 heapstorm zero
+[link](./2018-11-09-hctf.md)
+
 ## Teaser Dragon CTF 2018 
 [link](./2018-09-29-Teaser-Dragon-CTF-2018.html)
 
