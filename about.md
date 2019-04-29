@@ -15,5 +15,3 @@ This blog is for sharing my knowledge and communicating with the world.
 Email:changochen1@gmail.com
 
 Github:[Changochen](https://github.com/Changochen)
-
-![haha](./video.gif)
