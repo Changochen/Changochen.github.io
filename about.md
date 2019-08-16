@@ -11,6 +11,6 @@ PhD student at Georgia Tech.
 
 This blog is for sharing my knowledge and communicating with the world.
 
-Email:changochen1@gmail.com
+Email:changochen1@gmail.com / ne0@gatech.edu
 
 Github:[Changochen](https://github.com/Changochen)
