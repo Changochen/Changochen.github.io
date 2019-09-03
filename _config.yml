@@ -6,6 +6,9 @@ theme: jekyll-theme-hacker
 author: Ne0
 
 home: /index.html
+
+writeup: /writeup.html
+
 github:
     homepage: https://github.com/Changochen
 
