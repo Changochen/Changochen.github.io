@@ -1,13 +1,12 @@
 ---
 layout: default
 ---
-A ctfer from
+I am $Yongheng Chen$, a first year CS PhD student at Georgia Tech, advised by Prof. Wenke Lee.
 
+A ctfer from
 - Blue-lotus
 - Eur3kA && r3kapig
 - Tea Delivers
-
-PhD student at Georgia Tech.
 
 This blog is for sharing my knowledge and communicating with the world.
 
