@@ -1,13 +1,14 @@
 ---
 layout: default
 ---
-A ctfer from
+I am Yongheng Chen, a first year CS PhD student at Georgia Tech, advised by Prof. Wenke Lee.
 
-- Blue-lotus
-- Eur3kA && r3kapig
+My research insterest is in binary exploitation and program analysis.
+
+I play CTF a lot, and I am a member of  
+- r3kapig
 - Tea Delivers
-
-PhD student at Georgia Tech.
+- Blue-lotus
 
 This blog is for sharing my knowledge and communicating with the world.
 
