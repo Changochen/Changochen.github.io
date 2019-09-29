@@ -1,9 +1,13 @@
 ---
 layout: default
 ---
-I am Yongheng Chen, a first year CS PhD student at Georgia Tech, advised by Prof. Wenke Lee.
+#### School of Computer Science
+#### College of Computing
+#### Georgia Institute of Technology
+#### Atlanta, GA
 
-My research insterest is in binary exploitation and program analysis.
+> I am a first year CS PhD student at Georgia Tech, advised by Prof. Wenke Lee.
+  My research insterest is in binary exploitation and program analysis.
 
 I play CTF a lot, and I am a member of  
 - r3kapig
