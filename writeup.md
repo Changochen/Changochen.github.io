@@ -4,6 +4,9 @@ layout: default
 
 # 2019
 
+## Windows Exploitation Tuturial One: Prerequisite
+[link](./windows-exploitation-tutorial-prerequisite.md)
+
 ## \*CTF 2019 oob-v8
 [link](./2019-04-29-starctf-2019.md)
 
