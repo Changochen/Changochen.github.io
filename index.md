@@ -5,10 +5,9 @@ layout: default
 I am a first year CS PhD student at Georgia Tech, advised by Prof. Wenke Lee. My research insterest is in binary exploitation and program analysis.
 
 ### Publication
-1. SQUIRREL: Testing Database Management Systems with Language Validity and Coverage Feedback. (to appear) \
-   Rui Zhong, **Yongheng Chen**(co-first author), Hong Hu, Hangfan Zhang, Wenke Lee and Dinghao Wu. \
-   In Proceedings of the 27th ACM Conference on Computer and Communications Security (CCS 2020). \
-
+1. SQUIRREL: Testing Database Management Systems with Language Validity and Coverage Feedback. (to appear) <br/>
+   Rui Zhong, **Yongheng Chen**(co-first author), Hong Hu, Hangfan Zhang, Wenke Lee and Dinghao Wu. <br/>
+   In Proceedings of the 27th ACM Conference on Computer and Communications Security (CCS 2020). 
 2. Automated Finite State Machine Extraction
 
    **Yongheng Chen**, Linhai Song, Xinyu Xing, Fengyuan Xu and Wenfei Wu. FEAST workshop@CCS'2019
