@@ -8,14 +8,10 @@ I am a first year CS PhD student at Georgia Tech, advised by Prof. Wenke Lee. My
 1. SQUIRREL: Testing Database Management Systems with Language Validity and Coverage Feedback. (to appear) <br/>
    Rui Zhong, **Yongheng Chen**(co-first author), Hong Hu, Hangfan Zhang, Wenke Lee and Dinghao Wu. <br/>
    In Proceedings of the 27th ACM Conference on Computer and Communications Security (CCS 2020). 
-2. Automated Finite State Machine Extraction
-
+2. Automated Finite State Machine Extraction. <br/>
    **Yongheng Chen**, Linhai Song, Xinyu Xing, Fengyuan Xu and Wenfei Wu. FEAST workshop@CCS'2019
-
-3. PT-DBG: Automatically anti-debugging bypassing based on Intel Processor Trace (Poster)
-
-   Guancheng Li, **Yongheng Chen**, Tianyi Li, Tongxin Li, Xinfeng Wu, Chao Zhang, Xinhui Han.
-
+3. PT-DBG: Automatically anti-debugging bypassing based on Intel Processor Trace (Poster)<br/>
+   Guancheng Li, **Yongheng Chen**, Tianyi Li, Tongxin Li, Xinfeng Wu, Chao Zhang, Xinhui Han.<br/>
    In Proceedings of the 39st IEEE Symposium on Security and Privacy (S&P 2018)
 
 ### CTF
