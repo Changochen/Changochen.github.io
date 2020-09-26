@@ -2,7 +2,7 @@
 layout: default
 ---
 
-I am a first year CS PhD student at Georgia Tech, advised by Prof. Wenke Lee. My research insterest is in binary exploitation and program analysis.
+I am a second year CS PhD student at Georgia Tech, advised by Prof. Wenke Lee. My research insterest is in binary exploitation and program analysis.
 
 ### Publication
 1. [SQUIRREL: Testing Database Management Systems with Language Validity and Coverage Feedback.](./publication/squirrel_ccs2020.pdf) (to appear) <br/>
