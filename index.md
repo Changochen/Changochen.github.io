@@ -5,13 +5,16 @@ layout: default
 I am a second year CS PhD student at Georgia Tech, advised by Prof. Wenke Lee. My research insterest is in binary exploitation and program analysis.
 
 ### Publication
-1. [SQUIRREL: Testing Database Management Systems with Language Validity and Coverage Feedback.](./publication/squirrel_ccs2020.pdf) <br/>
+4. One Engine to Fuzz 'em All: Generic Language Processor Testing with Semantic Validation (to appear) <br/>
+   **Yongheng Chen**, Rui Zhong(co-first author), Hong Hu, Hangfan Zhang, Yupeng Yang, Dinghao Wu and Wenke Lee. <br/>
+   In Proceedings of the 41st IEEE Symposium on Security and Privacy (Oakland 2021).
+3. [SQUIRREL: Testing Database Management Systems with Language Validity and Coverage Feedback.](./publication/squirrel_ccs2020.pdf) <br/>
    Rui Zhong, **Yongheng Chen**(co-first author), Hong Hu, Hangfan Zhang, Wenke Lee and Dinghao Wu. <br/>
    In Proceedings of the 27th ACM Conference on Computer and Communications Security (CCS 2020). 
 2. [Automated Finite State Machine Extraction.](./publication/feast02.pdf) <br/>
    **Yongheng Chen**, Linhai Song, Xinyu Xing, Fengyuan Xu and Wenfei Wu. <br/>
    FEAST workshop@CCS'2019
-3. [PT-DBG: Automatically anti-debugging bypassing based on Intel Processor Trace. (Poster)](./publication/ptdbg_sp2018_poster.pdf)<br/>
+1. [PT-DBG: Automatically anti-debugging bypassing based on Intel Processor Trace. (Poster)](./publication/ptdbg_sp2018_poster.pdf)<br/>
    Guancheng Li, **Yongheng Chen**, Tianyi Li, Tongxin Li, Xinfeng Wu, Chao Zhang, Xinhui Han.<br/>
    In Proceedings of the 39st IEEE Symposium on Security and Privacy (S&P 2018)
 
