@@ -8,7 +8,7 @@ I am a second year CS PhD student at Georgia Tech, advised by Prof. Wenke Lee. M
 4. One Engine to Fuzz 'em All: Generic Language Processor Testing with Semantic Validation (to appear) <br/>
    **Yongheng Chen**, Rui Zhong(co-first author), Hong Hu, Hangfan Zhang, Yupeng Yang, Dinghao Wu and Wenke Lee. <br/>
    In Proceedings of the 41st IEEE Symposium on Security and Privacy (Oakland 2021).
-3. [SQUIRREL: Testing Database Management Systems with Language Validity and Coverage Feedback.](./publication/squirrel_ccs2020.pdf) <br/>
+3. [SQUIRREL: Testing Database Management Systems with Language Validity and Coverage Feedback.](./publication/squirrel_ccs2020.pdf) [code](https://github.com/s3team/Squirrel) <br/>
    Rui Zhong, **Yongheng Chen**(co-first author), Hong Hu, Hangfan Zhang, Wenke Lee and Dinghao Wu. <br/>
    In Proceedings of the 27th ACM Conference on Computer and Communications Security (CCS 2020). 
 2. [Automated Finite State Machine Extraction.](./publication/feast02.pdf) <br/>
