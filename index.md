@@ -5,6 +5,9 @@ layout: default
 I am a second year CS PhD student at Georgia Tech, advised by Prof. Wenke Lee. My research insterest is in binary exploitation and program analysis.
 
 ### Publication
+5. Identifying Behavior Dispatchers for Malware Analysis <br/>
+   Kyuhong Park, Burak Sahin, **Yongheng Chen**, Jisheng Zhao, Evan Downing, Hong Hu, and Wenke Lee. <br/>
+   In Proceedings of the 16th ACM ASIA Conference on Computer and Communications Security (AsiaCCS 2021).
 4. One Engine to Fuzz 'em All: Generic Language Processor Testing with Semantic Validation (to appear) <br/>
    **Yongheng Chen**, Rui Zhong(co-first author), Hong Hu, Hangfan Zhang, Yupeng Yang, Dinghao Wu and Wenke Lee. <br/>
    In Proceedings of the 41st IEEE Symposium on Security and Privacy (Oakland 2021).
