@@ -2,7 +2,7 @@
 layout: default
 ---
 
-I am a third year CS PhD student at Georgia Tech, advised by Prof. Wenke Lee. My research insterest is in binary exploitation and program analysis.
+I am a third year CS PhD student at Georgia Tech, advised by Prof. Wenke Lee. My research insterest is in binary exploitation and program analysis. [cv](./cv.pdf) [linkedin](https://www.linkedin.com/in/yonghengchen/)
 
 ### Publication
 5. [Identifying Behavior Dispatchers for Malware Analysis](./publication/bdhunter.pdf) <br/>
