@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-I am Yongheng Chen, a first year CS PhD student at Georgia Tech, advised by Prof. Wenke Lee.
+I am Yongheng Chen, a CS PhD student at Georgia Tech, advised by Prof. Wenke Lee.
 
 My research insterest is in binary exploitation and program analysis.
 
