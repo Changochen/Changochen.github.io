@@ -5,16 +5,16 @@ layout: default
 I am CS PhD student at Georgia Tech (since 2019), advised by Prof. Wenke Lee. My research insterest is in binary exploitation and program analysis. [cv](./cv.pdf) [linkedin](https://www.linkedin.com/in/yonghengchen/)
 
 ### Publication
-6. μFuzz: Redesign of Parallel Fuzzing Using Microservice Architecture <br/>
+6. [μFuzz: Redesign of Parallel Fuzzing Using Microservice Architecture](./publication/mufuzz_usenix_2023.pdf) [[code](https://github.com/OMH4ck/mufuzz)] <br/>
    Yongheng Chen, Rui Zhong, Yupeng Yang, Hong Hu, Dinghao Wu, and Wenke Lee. <br/>
    In Proceedings of the 32nd USENIX Security Symposium (USENIX 2023).
 5. [Identifying Behavior Dispatchers for Malware Analysis](./publication/bdhunter.pdf) <br/>
    Kyuhong Park, Burak Sahin, **Yongheng Chen**, Jisheng Zhao, Evan Downing, Hong Hu, and Wenke Lee. <br/>
    In Proceedings of the 16th ACM ASIA Conference on Computer and Communications Security (AsiaCCS 2021).
-4. [One Engine to Fuzz 'em All: Generic Language Processor Testing with Semantic Validation](./publication/polyglot_sp_2021_to_appear.pdf)[[code](https://github.com/s3team/Polyglot)] <br/>
+4. [One Engine to Fuzz 'em All: Generic Language Processor Testing with Semantic Validation](./publication/polyglot_sp_2021_to_appear.pdf)[[code](https://github.com/OMH4ck/PolyGlot)] <br/>
    **Yongheng Chen**, Rui Zhong(co-first author), Hong Hu, Hangfan Zhang, Yupeng Yang, Dinghao Wu and Wenke Lee. <br/>
    In Proceedings of the 41st IEEE Symposium on Security and Privacy (Oakland 2021).
-3. [SQUIRREL: Testing Database Management Systems with Language Validity and Coverage Feedback.](./publication/squirrel_ccs2020.pdf) [[code](https://github.com/s3team/Squirrel)]<br/>
+3. [SQUIRREL: Testing Database Management Systems with Language Validity and Coverage Feedback.](./publication/squirrel_ccs2020.pdf) [[code](https://github.com/OMH4ck/Squirrel)]<br/>
    Rui Zhong, **Yongheng Chen**(co-first author), Hong Hu, Hangfan Zhang, Wenke Lee and Dinghao Wu. <br/>
    In Proceedings of the 27th ACM Conference on Computer and Communications Security (CCS 2020). 
 2. [Automated Finite State Machine Extraction.](./publication/feast02.pdf) <br/>
