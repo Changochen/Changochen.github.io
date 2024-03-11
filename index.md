@@ -2,11 +2,14 @@
 layout: default
 ---
 
-I am CS PhD student at Georgia Tech (since 2019), advised by Prof. Wenke Lee. My research insterest is in binary exploitation and program analysis. [cv](./cv.pdf) [linkedin](https://www.linkedin.com/in/yonghengchen/)
+I am CS PhD student at Georgia Tech (since 2019), advised by Prof. Wenke Lee. My research insterest is in binary exploitation and program analysis. [cv](https://docs.google.com/document/d/1yU2zeUnlBUX7qrnJU93m4UJXi_I2rKEEBEBdl_8Slhg/edit?usp=sharing) [linkedin](https://www.linkedin.com/in/yonghengchen/)
 
 ### Publication
+7. Towards Generic Database Management System Fuzzing <br/>
+   Yupeng Yang, **Yongheng Chen**, Rui Zhong, Jizhou Chen, and Wenke Lee.<br/>
+   In Proceedings of the 33rd USENIX Security Symposium (USENIX 2024). [To appear]<br/>
 6. [μFuzz: Redesign of Parallel Fuzzing Using Microservice Architecture](./publication/mufuzz_usenix_2023.pdf) [[code](https://github.com/OMH4ck/mufuzz)] <br/>
-   Yongheng Chen, Rui Zhong, Yupeng Yang, Hong Hu, Dinghao Wu, and Wenke Lee. <br/>
+   **Yongheng Chen**, Rui Zhong, Yupeng Yang, Hong Hu, Dinghao Wu, and Wenke Lee. <br/>
    In Proceedings of the 32nd USENIX Security Symposium (USENIX 2023).
 5. [Identifying Behavior Dispatchers for Malware Analysis](./publication/bdhunter.pdf) <br/>
    Kyuhong Park, Burak Sahin, **Yongheng Chen**, Jisheng Zhao, Evan Downing, Hong Hu, and Wenke Lee. <br/>
