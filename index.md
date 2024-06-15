@@ -14,7 +14,7 @@ I received my PhD from Georgia Tech, advised by Prof. Wenke Lee. My research ins
 ### Publication
 7. [Towards Generic Database Management System Fuzzing](https://www.usenix.org/system/files/sec24summer-prepub-7-yang-yupeng.pdf) <br/>
    Yupeng Yang, **Yongheng Chen**, Rui Zhong, Jizhou Chen, and Wenke Lee.<br/>
-   In Proceedings of the 33rd USENIX Security Symposium (USENIX 2024). [To appear]<br/>
+   In Proceedings of the 33rd USENIX Security Symposium (USENIX 2024) <br/>
 6. [μFuzz: Redesign of Parallel Fuzzing Using Microservice Architecture](./publication/mufuzz_usenix_2023.pdf) [[code](https://github.com/OMH4ck/mufuzz)] <br/>
    **Yongheng Chen**, Rui Zhong, Yupeng Yang, Hong Hu, Dinghao Wu, and Wenke Lee. <br/>
    In Proceedings of the 32nd USENIX Security Symposium (USENIX 2023).
