@@ -8,7 +8,7 @@ I received my PhD from Georgia Tech, advised by Prof. Wenke Lee. My research ins
 
 [cv](https://docs.google.com/document/d/1yU2zeUnlBUX7qrnJU93m4UJXi_I2rKEEBEBdl_8Slhg/edit?usp=sharing)
 [linkedin](https://www.linkedin.com/in/yonghengchen/)
-[github](https://changochen.github.io/)
+[github](https://github.com/Changochen)
 [google scholar](https://scholar.google.com/citations?user=5bRtGGQAAAAJ&hl=en)
 
 ### Publication
