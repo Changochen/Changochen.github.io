@@ -2,7 +2,7 @@
 layout: default
 ---
 
-I am a software engineer at Google. 
+I am a software engineer at Google DeepMind. 
 
 I received my PhD from Georgia Tech, advised by Prof. Wenke Lee. My research insterest is in fuzzing, binary exploitation and program analysis.
 
