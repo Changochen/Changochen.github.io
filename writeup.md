@@ -2,6 +2,11 @@
 layout: default
 ---
 
+# 2026
+
+## 【漫话AI】Prompt Engineering：不是玄学，是说话的艺术
+[link](./2026-02-19-prompt-engineering.md)
+
 # 2019
 
 ## Windows Exploitation Tuturial One: Prerequisite
