@@ -8,6 +8,7 @@ I am a software engineer at Google DeepMind. I received my PhD from Georgia Tech
 [linkedin](https://www.linkedin.com/in/yonghengchen/)
 [github](https://github.com/Changochen)
 [google scholar](https://scholar.google.com/citations?user=5bRtGGQAAAAJ&hl=en)
+[twitter](https://x.com/changochen11)
 
 ---
 

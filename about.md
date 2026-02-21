@@ -10,6 +10,7 @@ I received my PhD from Georgia Tech, advised by Prof. Wenke Lee. My research ins
 [linkedin](https://www.linkedin.com/in/yonghengchen/)
 [github](https://github.com/Changochen)
 [google scholar](https://scholar.google.com/citations?user=5bRtGGQAAAAJ&hl=en)
+[twitter](https://x.com/changochen11)
 
 ### Publication
 7. [Towards Generic Database Management System Fuzzing](https://www.usenix.org/system/files/sec24summer-prepub-7-yang-yupeng.pdf) <br/>
