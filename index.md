@@ -12,6 +12,7 @@ I am a software engineer at Google DeepMind. I received my PhD from Georgia Tech
 
 ## 2026
 
+- [【漫话AI】连大妈都自愧不如的"世纪红娘"，是怎么让机器看懂人类心思的？](./2026-03-02-embedding.html)
 - [【漫话AI】Prompt Engineering：不是玄学，是说话的艺术](./2026-02-19-prompt-engineering.html)
 
 ## 2019
