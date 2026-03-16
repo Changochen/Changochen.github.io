@@ -12,6 +12,8 @@ I am a software engineer at Google DeepMind. I received my PhD from Georgia Tech
 
 ## 2026
 
+- [【漫话AI】每次接话都要从盘古开天辟地重新盘？大模型原来是个"记仇狂"](./2026-03-16-kv-cache.html)
+- [【漫话AI】为什么AI突然开窍了？从一场极其混乱的娱乐圈大瓜说起](./2026-03-16-transformer.html)
 - [【漫话AI】LLM工作原理：你在这头流泪，它在那头狂玩"文字接龙"？](./2026-03-02-llm-how-it-works.html)
 - [【漫话AI】连大妈都自愧不如的"世纪红娘"，是怎么让机器看懂人类心思的？](./2026-03-02-embedding.html)
 - [【漫话AI】Prompt Engineering：不是玄学，是说话的艺术](./2026-02-19-prompt-engineering.html)
