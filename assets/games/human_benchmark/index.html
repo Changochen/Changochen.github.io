@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Human Benchmark</title>
+<link rel="stylesheet" href="style.css" />
+<style>
+  main.landing {
+    flex: 1;
+    padding: 48px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  main.landing h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1f2a36;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  main.landing p.lede {
+    color: #5b6776;
+    margin-bottom: 32px;
+    font-size: 15px;
+    text-align: center;
+    max-width: 520px;
+  }
+  .games {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    max-width: 720px;
+    width: 100%;
+  }
+  .games a {
+    display: block;
+    background: #fff;
+    border: 1px solid #e1e5ea;
+    border-radius: 10px;
+    padding: 24px 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.1s ease;
+  }
+  .games a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(43, 135, 209, 0.12);
+    border-color: #b6cfe6;
+  }
+  .games .emoji { font-size: 40px; margin-bottom: 12px; line-height: 1; }
+  .games h3 { font-size: 17px; font-weight: 600; margin-bottom: 6px; color: #1f2a36; }
+  .games p { font-size: 13px; color: #5b6776; line-height: 1.45; }
+  footer.foot {
+    padding: 24px;
+    text-align: center;
+    color: #8895a4;
+    font-size: 12px;
+  }
+  footer.foot a { color: inherit; }
+</style>
+</head>
+<body>
+  <header class="site">
+    <h1>Human Benchmark</h1>
+    <p class="sub">Quick cognitive tests in your browser.</p>
+  </header>
+
+  <main class="landing">
+    <h2>Test your cognitive abilities</h2>
+    <p class="lede">Small browser-based exercises inspired by humanbenchmark.com. Pick a test to begin.</p>
+    <div class="games">
+      <a href="reaction-time.html">
+        <div class="emoji">⚡</div>
+        <h3>Reaction Time</h3>
+        <p>Click as soon as the screen turns green. Measures visual reaction time in milliseconds.</p>
+      </a>
+      <a href="number-memory.html">
+        <div class="emoji">🔢</div>
+        <h3>Number Memory</h3>
+        <p>Memorize a number that gets one digit longer each round. How far can you go?</p>
+      </a>
+      <a href="chimp-test.html">
+        <div class="emoji">🐵</div>
+        <h3>Chimp Test</h3>
+        <p>Click 1..N in order. They hide after the first click — three strikes ends the game.</p>
+      </a>
+      <a href="sequence-memory.html">
+        <div class="emoji">🟩</div>
+        <h3>Sequence Memory</h3>
+        <p>Watch squares flash on a 3×3 grid, then repeat the sequence. It grows each round.</p>
+      </a>
+    </div>
+  </main>
+
+  <footer class="foot">
+    Source on <a href="https://github.com/Changochen/human_benchmark">GitHub</a>.
+  </footer>
+</body>
+</html>

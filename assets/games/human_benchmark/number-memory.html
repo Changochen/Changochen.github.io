@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Number Memory · Human Benchmark</title>
+<link rel="stylesheet" href="style.css" />
+<style>
+  main.game {
+    flex: 1;
+    background: #2b87d1;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px 24px;
+  }
+  .level { font-size: 16px; opacity: 0.85; margin-bottom: 24px; letter-spacing: 1px; text-transform: uppercase; }
+  .number {
+    font-size: clamp(40px, 8vw, 72px);
+    font-weight: 700;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 6px;
+    word-break: break-all;
+    max-width: 95vw;
+  }
+  .timer {
+    width: min(420px, 80vw);
+    height: 4px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 2px;
+    margin-top: 36px;
+    overflow: hidden;
+  }
+  .timer-bar {
+    height: 100%;
+    background: #fff;
+    width: 100%;
+    transform-origin: left;
+  }
+  input.answer {
+    font-size: 32px;
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: 2px solid rgba(255,255,255,0.7);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    width: min(420px, 80vw);
+    text-align: center;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 4px;
+    outline: none;
+    margin-bottom: 18px;
+  }
+  input.answer:focus { border-color: #fff; background: rgba(255,255,255,0.15); }
+  input.answer::placeholder { color: rgba(255,255,255,0.5); letter-spacing: 0; font-size: 16px; }
+  button.primary {
+    background: #fff;
+    color: #2b87d1;
+    border: none;
+    padding: 12px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  button.primary:hover { background: #eef4fb; }
+  button.secondary {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.6);
+    padding: 10px 22px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-family: inherit;
+  }
+  button.secondary:hover { background: rgba(255,255,255,0.12); }
+  .title { font-size: 36px; font-weight: 700; margin-bottom: 12px; }
+  .icon { font-size: 64px; margin-bottom: 16px; }
+  .subtitle { font-size: 18px; opacity: 0.9; margin-bottom: 24px; max-width: 480px; line-height: 1.4; }
+  .compare {
+    margin: 16px 0 24px;
+    font-size: 15px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    background: rgba(0,0,0,0.18);
+    border-radius: 6px;
+    padding: 12px 16px;
+    text-align: left;
+    line-height: 1.6;
+  }
+  .compare .label { opacity: 0.65; display: inline-block; width: 110px; }
+  .compare .you { color: #ffd47a; }
+  .compare .truth { color: #b9f0c2; }
+  .best-line { margin-top: 18px; font-size: 14px; opacity: 0.8; }
+</style>
+</head>
+<body>
+  <header class="site">
+    <a class="home" href="index.html">← Home</a>
+    <h1>Number Memory</h1>
+    <p class="sub">Memorize the number, then type it back.</p>
+  </header>
+  <main class="game" id="game"></main>
+  <aside class="scoreboard" id="scoreboard"></aside>
+
+<script src="scoreboard.js"></script>
+<script>
+(function () {
+  const game = document.getElementById('game');
+  const scoreboardEl = document.getElementById('scoreboard');
+  const sb = makeScoreboard('numberMemory', { defaultStart: 1 });
+
+  // Migrate older single-best storage to the new history format.
+  (function migrate() {
+    const OLD_BEST_KEY = 'numberMemoryBestLevel';
+    const oldBest = parseInt(localStorage.getItem(OLD_BEST_KEY) || '0', 10);
+    if (oldBest > 0 && sb.loadHistory().length === 0) {
+      sb.saveHistory([{ startLevel: 1, reachedLevel: oldBest, t: Date.now() }]);
+    }
+    try { localStorage.removeItem(OLD_BEST_KEY); } catch (_) {}
+  })();
+
+  let level = 1;
+  let runStartLevel = 1;
+  let currentNumber = '';
+  let displayTimer = null;
+
+  function generateNumber(digits) {
+    let s = String(1 + Math.floor(Math.random() * 9));
+    for (let i = 1; i < digits; i++) s += Math.floor(Math.random() * 10);
+    return s;
+  }
+  function bestLine() {
+    const b = sb.getBestLevel();
+    return b > 0 ? `<div class="best-line">Best: Level ${b}</div>` : '';
+  }
+
+  function renderIntro() {
+    const lastStart = sb.getLastStart();
+    game.innerHTML = `
+      <div class="icon">🔢</div>
+      <div class="title">Number Memory</div>
+      <div class="subtitle">A number will appear briefly. Memorize it, then type it back.</div>
+      <div class="start-row">
+        <label class="start-input">
+          Start at level
+          <input type="number" id="startLevelInput" min="1" max="99" value="${lastStart}" inputmode="numeric" />
+        </label>
+        <button class="primary" id="startBtn">Start</button>
+      </div>
+      ${bestLine()}
+    `;
+    const input = document.getElementById('startLevelInput');
+    const btn = document.getElementById('startBtn');
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); beginRun(); }
+    });
+    btn.addEventListener('click', beginRun);
+    btn.focus();
+    sb.render(scoreboardEl, true, renderIntro);
+  }
+
+  function beginRun() {
+    const input = document.getElementById('startLevelInput');
+    let n = parseInt(input.value, 10);
+    if (isNaN(n) || n < 1) n = 1;
+    if (n > 99) n = 99;
+    sb.setLastStart(n);
+    runStartLevel = n;
+    level = n;
+    runLevel();
+  }
+
+  function runLevel() {
+    currentNumber = generateNumber(level);
+    const duration = Math.max(2000, (level + 1) * 1000);
+    game.innerHTML = `
+      <div class="level">Level ${level}</div>
+      <div class="number">${currentNumber}</div>
+      <div class="timer"><div class="timer-bar" id="bar"></div></div>
+    `;
+    sb.render(scoreboardEl, false);
+    const bar = document.getElementById('bar');
+    bar.getBoundingClientRect();
+    bar.style.transition = `transform ${duration}ms linear`;
+    bar.style.transform = 'scaleX(0)';
+    clearTimeout(displayTimer);
+    displayTimer = setTimeout(promptInput, duration);
+  }
+
+  function promptInput() {
+    game.innerHTML = `
+      <div class="level">Level ${level}</div>
+      <div class="subtitle">What was the number?</div>
+      <input
+        class="answer"
+        id="answer"
+        inputmode="numeric"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        maxlength="${level + 8}"
+        placeholder="Type the number"
+      />
+      <button class="primary" id="submitBtn">Submit</button>
+    `;
+    const input = document.getElementById('answer');
+    input.focus();
+    input.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '');
+    });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); submitAnswer(); }
+    });
+    document.getElementById('submitBtn').addEventListener('click', submitAnswer);
+  }
+
+  function submitAnswer() {
+    const input = document.getElementById('answer');
+    const guess = (input && input.value || '').trim();
+    if (guess === currentNumber) showCorrect();
+    else showWrong(guess);
+  }
+
+  function showCorrect() {
+    game.innerHTML = `
+      <div class="icon">✅</div>
+      <div class="title">Correct!</div>
+      <div class="subtitle">You finished level ${level}.</div>
+      <button class="primary" id="nextBtn">Next level →</button>
+    `;
+    const btn = document.getElementById('nextBtn');
+    btn.focus();
+    btn.addEventListener('click', () => {
+      level += 1;
+      runLevel();
+    });
+  }
+
+  function showWrong(guess) {
+    const reached = level - 1;
+    sb.addRun(runStartLevel, reached);
+    game.innerHTML = `
+      <div class="icon">❌</div>
+      <div class="title">Game over</div>
+      <div class="subtitle">You reached <strong>level ${reached}</strong> (started at level ${runStartLevel}).</div>
+      <div class="compare">
+        <div><span class="label">Number:</span> <span class="truth">${currentNumber}</span></div>
+        <div><span class="label">You typed:</span> <span class="you">${guess || '(empty)'}</span></div>
+      </div>
+      <button class="primary" id="retryBtn">Try again (Lvl ${runStartLevel})</button>
+      <button class="secondary" id="menuBtn">Back to menu</button>
+      ${bestLine()}
+    `;
+    const retry = document.getElementById('retryBtn');
+    retry.focus();
+    retry.addEventListener('click', () => {
+      level = runStartLevel;
+      runLevel();
+    });
+    document.getElementById('menuBtn').addEventListener('click', renderIntro);
+    sb.render(scoreboardEl, true, renderIntro);
+  }
+
+  renderIntro();
+})();
+</script>
+</body>
+</html>

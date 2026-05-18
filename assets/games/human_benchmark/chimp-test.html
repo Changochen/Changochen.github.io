@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chimp Test · Human Benchmark</title>
+<link rel="stylesheet" href="style.css" />
+<style>
+  main.game {
+    flex: 1;
+    background: #6b3fa0;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+  }
+  .top-row {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.9;
+  }
+  .strikes-val { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 4px; }
+  .strikes-val .x { color: #ff8a7a; }
+  .chimp-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 6px;
+    width: min(640px, 90vw);
+    aspect-ratio: 8 / 5;
+  }
+  .chimp-cell {
+    background: #fff;
+    color: #1f2a36;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(16px, 3vw, 28px);
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.08s;
+  }
+  .chimp-cell.blank { color: transparent; }
+  .chimp-cell:hover { transform: scale(0.97); }
+  .chimp-cell.wrong { background: #ff8a7a !important; color: #fff !important; animation: shake 0.25s; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+  }
+  .title { font-size: 36px; font-weight: 700; margin-bottom: 12px; }
+  .icon { font-size: 64px; margin-bottom: 16px; }
+  .subtitle { font-size: 18px; opacity: 0.9; margin-bottom: 24px; max-width: 480px; line-height: 1.4; }
+  .best-line { margin-top: 18px; font-size: 14px; opacity: 0.8; }
+  button.primary {
+    background: #fff;
+    color: #6b3fa0;
+    border: none;
+    padding: 12px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  button.primary:hover { background: #f3eafa; }
+  button.secondary {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.6);
+    padding: 10px 22px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-family: inherit;
+  }
+  button.secondary:hover { background: rgba(255,255,255,0.12); }
+</style>
+</head>
+<body>
+  <header class="site">
+    <a class="home" href="index.html">← Home</a>
+    <h1>Chimp Test</h1>
+    <p class="sub">Click the numbers in order. They hide after you click 1.</p>
+  </header>
+  <main class="game" id="game"></main>
+  <aside class="scoreboard" id="scoreboard"></aside>
+
+<script src="scoreboard.js"></script>
+<script>
+(function () {
+  const game = document.getElementById('game');
+  const scoreboardEl = document.getElementById('scoreboard');
+  const sb = makeScoreboard('chimpTest', { defaultStart: 4 });
+
+  const COLS = 8, ROWS = 5;
+  const MAX_STRIKES = 3;
+
+  let level = 4;
+  let runStartLevel = 4;
+  let cells = []; // [{ r, c, number, state: 'numbered'|'blank'|'gone' }]
+  let nextClick = 1;
+  let firstClicked = false;
+  let strikes = 0;
+  let inputLocked = false;
+
+  function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  function bestLine() {
+    const b = sb.getBestLevel();
+    return b > 0 ? `<div class="best-line">Best: Level ${b}</div>` : '';
+  }
+  function strikesHTML() {
+    const dots = [];
+    for (let i = 0; i < MAX_STRIKES; i++) {
+      dots.push(i < strikes ? '<span class="x">×</span>' : '·');
+    }
+    return dots.join(' ');
+  }
+
+  function renderIntro() {
+    const lastStart = sb.getLastStart();
+    game.innerHTML = `
+      <div class="icon">🐵</div>
+      <div class="title">Chimp Test</div>
+      <div class="subtitle">Click 1..N in order. They hide after you click 1. Three strikes ends the game.</div>
+      <div class="start-row">
+        <label class="start-input">
+          Start at level
+          <input type="number" id="startLevelInput" min="1" max="40" value="${lastStart}" inputmode="numeric" />
+        </label>
+        <button class="primary" id="startBtn">Start</button>
+      </div>
+      ${bestLine()}
+    `;
+    const input = document.getElementById('startLevelInput');
+    const btn = document.getElementById('startBtn');
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); beginRun(); }
+    });
+    btn.addEventListener('click', beginRun);
+    btn.focus();
+    sb.render(scoreboardEl, true, renderIntro);
+  }
+
+  function beginRun() {
+    const input = document.getElementById('startLevelInput');
+    let n = parseInt(input.value, 10);
+    if (isNaN(n) || n < 1) n = 1;
+    if (n > 40) n = 40;
+    sb.setLastStart(n);
+    runStartLevel = n;
+    level = n;
+    strikes = 0;
+    setupLevel();
+  }
+
+  function setupLevel() {
+    const positions = [];
+    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) positions.push({ r, c });
+    shuffle(positions);
+    const N = Math.min(level, positions.length);
+    cells = positions.slice(0, N).map((p, i) => ({
+      r: p.r, c: p.c, number: i + 1, state: 'numbered',
+    }));
+    nextClick = 1;
+    firstClicked = false;
+    inputLocked = false;
+    renderGrid();
+  }
+
+  function renderGrid() {
+    const cellsHTML = cells.map((c, i) => {
+      if (c.state === 'gone') return '';
+      const cls = c.state === 'blank' ? 'chimp-cell blank' : 'chimp-cell';
+      return `<div class="${cls}" data-index="${i}"
+        style="grid-column: ${c.c + 1}; grid-row: ${c.r + 1};">${c.number}</div>`;
+    }).join('');
+    game.innerHTML = `
+      <div class="top-row">
+        <div>Level ${level}</div>
+        <div>Strikes <span class="strikes-val">${strikesHTML()}</span></div>
+      </div>
+      <div class="chimp-grid" id="grid">${cellsHTML}</div>
+    `;
+    document.getElementById('grid').addEventListener('click', (e) => {
+      if (inputLocked) return;
+      const el = e.target.closest('.chimp-cell');
+      if (!el) return;
+      onCellClick(parseInt(el.dataset.index, 10));
+    });
+    sb.render(scoreboardEl, false);
+  }
+
+  function onCellClick(idx) {
+    const cell = cells[idx];
+    if (!cell || cell.state === 'gone') return;
+    if (cell.number === nextClick) {
+      if (!firstClicked) {
+        firstClicked = true;
+        cells.forEach(c => {
+          if (c.state === 'numbered' && c.number !== 1) c.state = 'blank';
+        });
+      }
+      cell.state = 'gone';
+      nextClick++;
+      if (nextClick > level) {
+        inputLocked = true;
+        level += 1;
+        setTimeout(setupLevel, 400);
+      } else {
+        renderGrid();
+      }
+    } else {
+      inputLocked = true;
+      const el = document.querySelector(`.chimp-cell[data-index="${idx}"]`);
+      if (el) el.classList.add('wrong');
+      strikes += 1;
+      setTimeout(() => {
+        if (strikes >= MAX_STRIKES) gameOver();
+        else setupLevel();
+      }, 600);
+    }
+  }
+
+  function gameOver() {
+    const reached = level - 1;
+    sb.addRun(runStartLevel, reached);
+    game.innerHTML = `
+      <div class="icon">🐵</div>
+      <div class="title">Game over</div>
+      <div class="subtitle">You reached <strong>level ${reached}</strong> (started at level ${runStartLevel}).</div>
+      <button class="primary" id="retryBtn">Try again (Lvl ${runStartLevel})</button>
+      <button class="secondary" id="menuBtn">Back to menu</button>
+      ${bestLine()}
+    `;
+    const retry = document.getElementById('retryBtn');
+    retry.focus();
+    retry.addEventListener('click', () => {
+      level = runStartLevel;
+      strikes = 0;
+      setupLevel();
+    });
+    document.getElementById('menuBtn').addEventListener('click', renderIntro);
+    sb.render(scoreboardEl, true, renderIntro);
+  }
+
+  renderIntro();
+})();
+</script>
+</body>
+</html>

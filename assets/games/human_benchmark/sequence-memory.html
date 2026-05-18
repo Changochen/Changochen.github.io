@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sequence Memory · Human Benchmark</title>
+<link rel="stylesheet" href="style.css" />
+<style>
+  main.game {
+    flex: 1;
+    background: #1d9474;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+  }
+  .top-row {
+    font-size: 16px;
+    opacity: 0.85;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .seq-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    width: min(360px, 80vw);
+    aspect-ratio: 1;
+    pointer-events: none;
+  }
+  .seq-grid.waiting { pointer-events: auto; }
+  .seq-cell {
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.08s;
+  }
+  .seq-grid.waiting .seq-cell:hover { background: rgba(255,255,255,0.28); }
+  .seq-cell.lit { background: #fff; }
+  .seq-cell.wrong { background: #ff8a7a !important; }
+  .status {
+    font-size: 14px;
+    opacity: 0.85;
+    margin-top: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    min-height: 18px;
+  }
+  .title { font-size: 36px; font-weight: 700; margin-bottom: 12px; }
+  .icon { font-size: 64px; margin-bottom: 16px; }
+  .subtitle { font-size: 18px; opacity: 0.9; margin-bottom: 24px; max-width: 480px; line-height: 1.4; }
+  .best-line { margin-top: 18px; font-size: 14px; opacity: 0.8; }
+  button.primary {
+    background: #fff;
+    color: #1d9474;
+    border: none;
+    padding: 12px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  button.primary:hover { background: #e8f7ef; }
+  button.secondary {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.6);
+    padding: 10px 22px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-family: inherit;
+  }
+  button.secondary:hover { background: rgba(255,255,255,0.12); }
+</style>
+</head>
+<body>
+  <header class="site">
+    <a class="home" href="index.html">← Home</a>
+    <h1>Sequence Memory</h1>
+    <p class="sub">Watch the squares flash, then repeat the sequence.</p>
+  </header>
+  <main class="game" id="game"></main>
+  <aside class="scoreboard" id="scoreboard"></aside>
+
+<script src="scoreboard.js"></script>
+<script>
+(function () {
+  const game = document.getElementById('game');
+  const scoreboardEl = document.getElementById('scoreboard');
+  const sb = makeScoreboard('sequenceMemory', { defaultStart: 1 });
+
+  const GRID = 9; // 3x3
+  const FLASH_ON = 500;
+  const FLASH_GAP = 200;
+
+  let level = 1;
+  let runStartLevel = 1;
+  let sequence = [];
+  let inputIndex = 0;
+  let state = 'idle'; // 'playing' | 'waiting' | 'levelup' | 'over' | 'idle'
+
+  function bestLine() {
+    const b = sb.getBestLevel();
+    return b > 0 ? `<div class="best-line">Best: Level ${b}</div>` : '';
+  }
+  function randCell() { return Math.floor(Math.random() * GRID); }
+
+  function renderIntro() {
+    const lastStart = sb.getLastStart();
+    game.innerHTML = `
+      <div class="icon">🟩</div>
+      <div class="title">Sequence Memory</div>
+      <div class="subtitle">Squares will flash one at a time on a 3×3 grid. Click them back in the same order. The sequence grows by one each round.</div>
+      <div class="start-row">
+        <label class="start-input">
+          Start at level
+          <input type="number" id="startLevelInput" min="1" max="50" value="${lastStart}" inputmode="numeric" />
+        </label>
+        <button class="primary" id="startBtn">Start</button>
+      </div>
+      ${bestLine()}
+    `;
+    const input = document.getElementById('startLevelInput');
+    const btn = document.getElementById('startBtn');
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); beginRun(); }
+    });
+    btn.addEventListener('click', beginRun);
+    btn.focus();
+    sb.render(scoreboardEl, true, renderIntro);
+  }
+
+  function beginRun() {
+    const input = document.getElementById('startLevelInput');
+    let n = parseInt(input.value, 10);
+    if (isNaN(n) || n < 1) n = 1;
+    if (n > 50) n = 50;
+    sb.setLastStart(n);
+    runStartLevel = n;
+    level = n;
+    sequence = [];
+    for (let i = 0; i < level; i++) sequence.push(randCell());
+    renderBoard();
+    setTimeout(playSequence, 500);
+  }
+
+  function renderBoard() {
+    let cellsHTML = '';
+    for (let i = 0; i < GRID; i++) {
+      cellsHTML += `<div class="seq-cell" data-idx="${i}"></div>`;
+    }
+    game.innerHTML = `
+      <div class="top-row">Level ${level}</div>
+      <div class="seq-grid" id="grid">${cellsHTML}</div>
+      <div class="status" id="status">Watch the sequence</div>
+    `;
+    document.getElementById('grid').addEventListener('click', (e) => {
+      if (state !== 'waiting') return;
+      const el = e.target.closest('.seq-cell');
+      if (!el) return;
+      onCellClick(parseInt(el.dataset.idx, 10));
+    });
+    sb.render(scoreboardEl, false);
+  }
+
+  function setStateMode(mode, msg) {
+    state = mode;
+    const grid = document.getElementById('grid');
+    if (grid) grid.classList.toggle('waiting', mode === 'waiting');
+    const statusEl = document.getElementById('status');
+    if (statusEl) statusEl.textContent = msg || '';
+  }
+
+  function flashCell(idx, duration, cb) {
+    const cell = document.querySelector(`.seq-cell[data-idx="${idx}"]`);
+    if (!cell) { if (cb) cb(); return; }
+    cell.classList.add('lit');
+    setTimeout(() => {
+      cell.classList.remove('lit');
+      if (cb) cb();
+    }, duration);
+  }
+
+  function playSequence() {
+    setStateMode('playing', 'Watch the sequence');
+    inputIndex = 0;
+    let i = 0;
+    function next() {
+      if (i >= sequence.length) {
+        setStateMode('waiting', 'Your turn');
+        return;
+      }
+      flashCell(sequence[i], FLASH_ON, () => {
+        setTimeout(next, FLASH_GAP);
+      });
+      i++;
+    }
+    next();
+  }
+
+  function onCellClick(idx) {
+    flashCell(idx, 200);
+    if (idx === sequence[inputIndex]) {
+      inputIndex++;
+      if (inputIndex === sequence.length) {
+        level += 1;
+        sequence.push(randCell());
+        setStateMode('levelup', 'Correct!');
+        setTimeout(() => {
+          renderBoard();
+          setTimeout(playSequence, 350);
+        }, 500);
+      }
+    } else {
+      const cell = document.querySelector(`.seq-cell[data-idx="${idx}"]`);
+      if (cell) cell.classList.add('wrong');
+      setStateMode('over', '');
+      setTimeout(gameOver, 600);
+    }
+  }
+
+  function gameOver() {
+    const reached = level - 1;
+    sb.addRun(runStartLevel, reached);
+    game.innerHTML = `
+      <div class="icon">❌</div>
+      <div class="title">Game over</div>
+      <div class="subtitle">You reached <strong>level ${reached}</strong> (started at level ${runStartLevel}).</div>
+      <button class="primary" id="retryBtn">Try again (Lvl ${runStartLevel})</button>
+      <button class="secondary" id="menuBtn">Back to menu</button>
+      ${bestLine()}
+    `;
+    const retry = document.getElementById('retryBtn');
+    retry.focus();
+    retry.addEventListener('click', () => {
+      level = runStartLevel;
+      sequence = [];
+      for (let i = 0; i < level; i++) sequence.push(randCell());
+      renderBoard();
+      setTimeout(playSequence, 500);
+    });
+    document.getElementById('menuBtn').addEventListener('click', renderIntro);
+    sb.render(scoreboardEl, true, renderIntro);
+  }
+
+  renderIntro();
+})();
+</script>
+</body>
+</html>

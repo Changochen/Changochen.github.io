@@ -8,6 +8,12 @@ I am a software engineer at Google DeepMind. I received my PhD from Georgia Tech
 
 ---
 
+# Games
+
+- [Human Benchmark](./assets/games/human_benchmark/index.html) — 反应速度、数字记忆、序列记忆、黑猩猩测试
+
+---
+
 # Blogs
 
 ## 2026

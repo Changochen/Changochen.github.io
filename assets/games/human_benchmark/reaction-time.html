@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reaction Time · Human Benchmark</title>
+<link rel="stylesheet" href="style.css" />
+<style>
+  #stage {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+    user-select: none;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    touch-action: manipulation;
+  }
+  #stage.start  { background: #2b87d1; }
+  #stage.wait   { background: #ce2636; }
+  #stage.go     { background: #4bdb6a; }
+  #stage.early  { background: #c0392b; }
+  #stage.result { background: #2b87d1; }
+  .icon { font-size: 64px; margin-bottom: 16px; line-height: 1; }
+  .title { font-size: 40px; font-weight: 700; margin-bottom: 12px; }
+  .subtitle { font-size: 20px; opacity: 0.9; margin-bottom: 8px; }
+  .ms { font-size: 64px; font-weight: 700; }
+  .small { font-size: 14px; opacity: 0.85; margin-top: 18px; }
+  #scores {
+    background: #f4f6f8;
+    border-top: 1px solid #e1e5ea;
+    padding: 14px 24px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: #3a4654;
+  }
+  #scores .label { font-weight: 600; color: #1f2a36; margin-right: 6px; }
+  #scores .attempts { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  button.reset {
+    margin-left: auto;
+    background: #fff;
+    border: 1px solid #c9d1da;
+    color: #3a4654;
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button.reset:hover { background: #eef1f4; }
+  @media (max-width: 480px) {
+    .title { font-size: 28px; }
+    .subtitle { font-size: 16px; }
+    .ms { font-size: 48px; }
+    .icon { font-size: 48px; }
+  }
+</style>
+</head>
+<body>
+  <header class="site">
+    <a class="home" href="index.html">← Home</a>
+    <h1>Reaction Time</h1>
+    <p class="sub">Click when the screen turns green.</p>
+  </header>
+
+  <div id="stage" class="start">
+    <div class="icon">⚡</div>
+    <div class="title">Reaction Time Test</div>
+    <div class="subtitle">Click anywhere to start</div>
+  </div>
+
+  <div id="scores">
+    <div><span class="label">Attempts:</span><span class="attempts" id="attempts">—</span></div>
+    <div><span class="label">Best:</span><span id="best">—</span></div>
+    <div><span class="label">Average:</span><span id="average">—</span></div>
+    <button class="reset" id="reset" type="button">Reset</button>
+  </div>
+
+<script>
+(function () {
+  const stage = document.getElementById('stage');
+  const attemptsEl = document.getElementById('attempts');
+  const bestEl = document.getElementById('best');
+  const averageEl = document.getElementById('average');
+  const resetBtn = document.getElementById('reset');
+
+  const STATE = { START: 'start', WAIT: 'wait', GO: 'go', EARLY: 'early', RESULT: 'result' };
+  let state = STATE.START;
+  let waitTimer = null;
+  let goAt = 0;
+  let times = [];
+
+  function setStage(cls, html) {
+    stage.className = cls;
+    stage.innerHTML = html;
+    state = cls;
+  }
+
+  function renderStart() {
+    setStage(STATE.START, `
+      <div class="icon">⚡</div>
+      <div class="title">Reaction Time Test</div>
+      <div class="subtitle">Click anywhere to start</div>
+    `);
+  }
+
+  function renderWait() {
+    setStage(STATE.WAIT, `
+      <div class="icon">✋</div>
+      <div class="title">Wait for green...</div>
+      <div class="subtitle">Click as soon as it turns green</div>
+    `);
+    const delay = 1500 + Math.random() * 3500;
+    waitTimer = setTimeout(() => {
+      setStage(STATE.GO, `
+        <div class="icon">👆</div>
+        <div class="title">Click!</div>
+      `);
+      // rAF callback fires just before the next paint — the same paint
+      // that puts the green on screen — so this is when the user actually
+      // sees it. (Earlier code used double rAF and shaved ~16ms off scores.)
+      requestAnimationFrame(() => { goAt = performance.now(); });
+    }, delay);
+  }
+
+  function renderEarly() {
+    clearTimeout(waitTimer);
+    setStage(STATE.EARLY, `
+      <div class="icon">❌</div>
+      <div class="title">Too soon!</div>
+      <div class="subtitle">Wait for the green screen.</div>
+      <div class="small">Click to try again</div>
+    `);
+  }
+
+  function renderResult(ms) {
+    times.push(ms);
+    updateScores();
+    setStage(STATE.RESULT, `
+      <div class="icon">⚡</div>
+      <div class="ms">${ms} ms</div>
+      <div class="small">Click to try again</div>
+    `);
+  }
+
+  function updateScores() {
+    if (times.length === 0) {
+      attemptsEl.textContent = '—';
+      bestEl.textContent = '—';
+      averageEl.textContent = '—';
+      return;
+    }
+    attemptsEl.textContent = times.map(t => `${t}`).join(', ');
+    bestEl.textContent = `${Math.min(...times)} ms`;
+    const avg = times.reduce((a, b) => a + b, 0) / times.length;
+    averageEl.textContent = `${Math.round(avg)} ms`;
+  }
+
+  function handlePress(eventTime) {
+    switch (state) {
+      case STATE.START:
+      case STATE.RESULT:
+      case STATE.EARLY:
+        renderWait();
+        break;
+      case STATE.WAIT:
+        renderEarly();
+        break;
+      case STATE.GO:
+        const ms = Math.max(0, Math.round(eventTime - goAt));
+        renderResult(ms);
+        break;
+    }
+  }
+
+  stage.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    handlePress(e.timeStamp);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.repeat) return;
+    // Don't hijack keys when the user is interacting with header/footer controls.
+    const ae = document.activeElement;
+    if (ae && ae !== document.body && ae !== stage) return;
+    if (e.code === 'Space' || e.code === 'Enter') {
+      e.preventDefault();
+      handlePress(e.timeStamp);
+    }
+  });
+
+  resetBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    clearTimeout(waitTimer);
+    times = [];
+    updateScores();
+    renderStart();
+  });
+
+  renderStart();
+  updateScores();
+})();
+</script>
+</body>
+</html>
